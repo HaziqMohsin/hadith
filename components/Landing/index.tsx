@@ -23,7 +23,7 @@ const Index = (props: Props) => {
   if (!data) return <p>No profile data</p>;
 
   return (
-    <div className="flex flex-wrap gap-3">
+    <div className="grid grid-cols-3 gap-3">
       {data?.data.map((v, i) => {
         return (
           <Link href={`/books/${v.id}`} key={i}>
