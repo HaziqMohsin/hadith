@@ -8,7 +8,7 @@ type Props = {
 
 const Index = ({ id }: Props) => {
   const router = useRouter();
-  const [data, setData] = useState<IResponse>(null);
+  const [data, setData] = useState<IResponse>();
   const [isLoading, setLoading] = useState(false);
 
   useEffect(() => {
@@ -16,7 +16,7 @@ const Index = ({ id }: Props) => {
     fetch(`https://api.hadith.gading.dev/books/${id}?range=1-200`)
       .then((res) => res.json())
       .then((data) => {
-        setData(data.data);
+        setData(data?.data);
         setLoading(false);
       });
   }, [id]);
@@ -45,6 +45,14 @@ const Index = ({ id }: Props) => {
 };
 
 interface IResponse {
+  avaiable: number;
+  hadiths: Hadith[];
+  id: string;
+  name: string;
+  requested: number;
+}
+
+interface Hadith {
   number: number;
   id: string;
   arab: string;

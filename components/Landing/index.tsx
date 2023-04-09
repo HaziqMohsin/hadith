@@ -6,7 +6,7 @@ import Link from "next/link";
 type Props = {};
 
 const Index = (props: Props) => {
-  const [data, setData] = useState(null);
+  const [data, setData] = useState<IResponse[]>();
   const [isLoading, setLoading] = useState(false);
 
   useEffect(() => {
@@ -14,7 +14,7 @@ const Index = (props: Props) => {
     fetch("https://api.hadith.gading.dev/books")
       .then((res) => res.json())
       .then((data) => {
-        setData(data);
+        setData(data.data);
         setLoading(false);
       });
   }, []);
@@ -24,10 +24,10 @@ const Index = (props: Props) => {
 
   return (
     <div className="grid grid-cols-3 gap-3">
-      {data?.data.map((v, i) => {
+      {data?.map((v, i) => {
         return (
           <Link href={`/books/${v.id}`} key={i}>
-            <div className="p-4 border border-solid border-gray-400 rounded-lg w-[150px] cursor-pointer">
+            <div className="p-4 border border-solid border-gray-400 rounded-lg cursor-pointer flex flex-auto h-full justify-center items-center text-center">
               <div className="text-black">{v.name}</div>
             </div>
           </Link>
@@ -36,5 +36,11 @@ const Index = (props: Props) => {
     </div>
   );
 };
+
+interface IResponse {
+  available: number;
+  id: string;
+  name: string;
+}
 
 export default Index;
